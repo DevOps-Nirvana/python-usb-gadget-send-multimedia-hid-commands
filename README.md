@@ -7,11 +7,11 @@ found this code/example didn't exist and especially not in Python.
 
 ## Purpose
 
-This code was made for some automation and integration for automation and integration of mobile devices to an Raspberry Pi.  Specifically, was designed for an iPad a shared space to allow for various input and sensors from Raspberry Pi to trigger things on the iPad.  This especially helps you do lots if you use the "Shortcuts iOS App" paired with enabling "Full Keyboard Support" on your iPad.
+This code was made for some automation and integration of mobile devices to an Raspberry Pi via an USB interface.  Specifically, this was designed for an iPad as a kiosk with external inputs to allow for various input and sensors from Raspberry Pi to trigger/inform things on the iPad.  This especially helps you do lots if you use the "Shortcuts iOS App" paired with enabling "Full Keyboard Support" on your iPad.
 
 This code is wonderful when paired with a tool such as [Triggerhappy](https://github.com/wertarbyte/triggerhappy) to remap keys/input to other keys and forward those keyboard presses into the Host USB Device via USB Gadget mode on Linux.  This code also acts as an simple library, so it can easily be imported in other Python scripts.
 
-## Setup
+## Setup / Installation
 
 1. Setup a fresh Linux device (eg: Raspberry Pi)
 1. Follow walkthrough [here](https://mtlynch.io/key-mime-pi/) to setup your device as an USB Gadget
@@ -26,10 +26,11 @@ echo -ne \\x05\\x01\\x09\\x06\\xa1\\x01\\x05\\x07\\x19\\xe0\\x29\\xe7\\x15\\x00\
 ```
 
 1. After the above manual change, reboot your device
-1. Plug your Linux Device into a USB host device (eg: iPhone, iPad, Mac/PC/Linux).  Note: You may need an USB "OTG" cable.  Also note: Not ALL USB ports (especially on the Raspberry Pi) can act as USB OTG, only a specific port.
-1. Download this script <instructions todo here>
+1. Plug your Linux Device (eg: Raspberry Pi) into a USB host device (eg: iPhone, iPad, Mac/PC/Linux).  Note: You may need an USB "OTG" cable.  Also note: Not ALL USB ports (especially on the Raspberry Pi) can act as USB OTG, only a specific port.
+1. Download this script with `wget https://raw.githubusercontent.com/DevOps-Nirvana/python-usb-gadget-send-multimedia-hid-commands/master/usb-gadget-multimedia-keys.py`
+1. Allow execute with `chmod a+x usb-gadget-multimedia-keys.py`
 
-## Usage (CLI / Testing)
+## Usage (CLI)
 
 ```bash
 # Run the command, asking for help
@@ -40,11 +41,14 @@ echo -ne \\x05\\x01\\x09\\x06\\xa1\\x01\\x05\\x07\\x19\\xe0\\x29\\xe7\\x15\\x00\
 
 ## Installation
 
-To install it on your system, a good recommended place is to put it in `/usr/local/bin`.  On most Unix-ey machines,
-this is already in your PATH, so you can simply download and chmod +x it to begin using it.
+Now that you've confirmed it works, to install it on your system, a good recommended place is to
+put it in `/usr/local/bin`.  On most Unix-ey machines this is already in your PATH, so you can simply download and chmod +x it to begin using it.
 
-```
-TODO
+```bash
+# Move this to the right folder
+mv ./usb_gadget_multimedia_keys.py /usr/local/bin
+# Try this globally now with...
+usb_gadget_multimedia_keys.py -h
 ```
 
 ## Usage (Triggerhappy)
@@ -56,9 +60,9 @@ Using a sample configuration such as...
 ```
 # FORMAT: <event name>	<event value>	<command line>
 # This is the + key on an extended keyboard on the number pad
-KEY_KPPLUS	1		./todo -k VOLUME_UP
+KEY_KPPLUS	1		/usr/local/bin/usb_gadget_multimedia_keys.py -k VOLUME_UP
 # This is the - key on an extended keyboard on the number pad
-KEY_KPMINUS	1		./todo -k VOLUME_DOWN
+KEY_KPMINUS	1		/usr/local/bin/usb_gadget_multimedia_keys.py -k VOLUME_DOWN
 ```
 
 ## Manual / Manpage
